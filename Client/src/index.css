@@ -1,111 +1,140 @@
-:root {
-  --text: #6b6375;
-  --text-h: #08060d;
-  --bg: #fff;
-  --border: #e5e4e7;
-  --code-bg: #f4f3ec;
-  --accent: #aa3bff;
-  --accent-bg: rgba(170, 59, 255, 0.1);
-  --accent-border: rgba(170, 59, 255, 0.5);
-  --social-bg: rgba(244, 243, 236, 0.5);
-  --shadow:
-    rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-  --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --mono: ui-monospace, Consolas, monospace;
-
-  font: 18px/145% var(--sans);
-  letter-spacing: 0.18px;
-  color-scheme: light dark;
-  color: var(--text);
-  background: var(--bg);
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-
-  @media (max-width: 1024px) {
-    font-size: 16px;
-  }
-}
-
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
-    --text: #9ca3af;
-    --text-h: #f3f4f6;
-    --bg: #16171d;
-    --border: #2e303a;
-    --code-bg: #1f2028;
-    --accent: #c084fc;
-    --accent-bg: rgba(192, 132, 252, 0.15);
-    --accent-border: rgba(192, 132, 252, 0.5);
-    --social-bg: rgba(47, 48, 58, 0.5);
-    --shadow:
-      rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
+    --desk-bg: #F6F1E7;
+    --card-bg: #FFFDF8;
+    --sub-bg: #EFE9DC;
+    --ink-text: #16141F;
+    --muted-text: #6B6678;
+    --border-hairline: #E3DCCB;
+
+    --tangerine-faint: rgba(255, 107, 53, 0.12);
+    --highlighter-faint: rgba(255, 216, 77, 0.35);
+    --violet-faint: rgba(109, 74, 255, 0.12);
+    --mint-faint: rgba(46, 196, 160, 0.15);
+    --rose-faint: rgba(229, 72, 77, 0.12);
+
+    --shadow-desk-sm: 0 1px 3px rgba(22, 20, 31, 0.05), 0 1px 2px rgba(22, 20, 31, 0.03);
+    --shadow-desk-md: 0 4px 14px rgba(22, 20, 31, 0.06), 0 1px 3px rgba(22, 20, 31, 0.04);
+    --shadow-desk-lg: 0 12px 30px rgba(22, 20, 31, 0.08), 0 2px 6px rgba(22, 20, 31, 0.04);
+    --shadow-desk-card: 0 2px 8px -2px rgba(22, 20, 31, 0.06), 0 1px 3px rgba(22, 20, 31, 0.04);
+    --shadow-desk-sticky: 2px 4px 12px rgba(22, 20, 31, 0.08);
+
+    --noise-opacity: 0.035;
   }
 
-  #social .button-icon {
-    filter: invert(1) brightness(2);
+  .dark {
+    --desk-bg: #0E0F1A;
+    --card-bg: #151726;
+    --sub-bg: #1C1E30;
+    --ink-text: #F4F0E8;
+    --muted-text: #8E8A9F;
+    --border-hairline: #25283D;
+
+    --tangerine-faint: rgba(255, 107, 53, 0.20);
+    --highlighter-faint: rgba(255, 216, 77, 0.22);
+    --violet-faint: rgba(109, 74, 255, 0.20);
+    --mint-faint: rgba(46, 196, 160, 0.20);
+    --rose-faint: rgba(229, 72, 77, 0.20);
+
+    --shadow-desk-sm: 0 1px 3px rgba(0, 0, 0, 0.35);
+    --shadow-desk-md: 0 4px 14px rgba(0, 0, 0, 0.45);
+    --shadow-desk-lg: 0 14px 34px rgba(0, 0, 0, 0.55);
+    --shadow-desk-card: 0 2px 8px -2px rgba(0, 0, 0, 0.4);
+    --shadow-desk-sticky: 2px 4px 14px rgba(0, 0, 0, 0.5);
+
+    --noise-opacity: 0.025;
+  }
+
+  * {
+    border-color: var(--border-hairline);
+  }
+
+  body {
+    background-color: var(--desk-bg);
+    color: var(--ink-text);
+    font-family: 'Inter', system-ui, sans-serif;
+    min-height: 100vh;
+    position: relative;
   }
 }
 
-body {
-  margin: 0;
+/* Subtle Tactile Paper Grain Texture */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: var(--noise-opacity);
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
 }
 
-#root {
-  width: 1126px;
-  max-width: 100%;
-  margin: 0 auto;
-  text-align: center;
-  border-inline: 1px solid var(--border);
-  min-height: 100svh;
-  display: flex;
-  flex-direction: column;
-  box-sizing: border-box;
+/* Index card notebook lines */
+.ruled-lines {
+  background-image: 
+    linear-gradient(90deg, transparent 48px, #FF6B3525 48px, #FF6B3525 50px, transparent 50px),
+    linear-gradient(0deg, var(--border-hairline) 1px, transparent 1px);
+  background-size: 100% 100%, 100% 28px;
+  background-position: 0 0, 0 16px;
 }
 
-h1,
-h2 {
-  font-family: var(--heading);
-  font-weight: 500;
-  color: var(--text-h);
+/* Vintage Ink Stamp Effect */
+.ink-stamp-border {
+  border: 2px dashed currentColor;
+  border-radius: 9999px;
+  box-shadow: inset 0 0 0 1px currentColor;
 }
 
-h1 {
-  font-size: 56px;
-  letter-spacing: -1.68px;
-  margin: 32px 0;
-  @media (max-width: 1024px) {
-    font-size: 36px;
-    margin: 20px 0;
-  }
-}
-h2 {
-  font-size: 24px;
-  line-height: 118%;
-  letter-spacing: -0.24px;
-  margin: 0 0 8px;
-  @media (max-width: 1024px) {
-    font-size: 20px;
-  }
-}
-p {
-  margin: 0;
-}
-
-code,
-.counter {
-  font-family: var(--mono);
+/* Highlighter Swipe effect */
+.highlighter-chip {
+  position: relative;
   display: inline-flex;
-  border-radius: 4px;
-  color: var(--text-h);
+  align-items: center;
+  border-radius: 6px;
+  padding: 2px 8px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: #16141F;
+  background-color: rgba(255, 216, 77, 0.4);
+  transition: all 0.2s ease;
+  cursor: pointer;
+  border: 1px solid rgba(255, 216, 77, 0.7);
 }
 
-code {
-  font-size: 15px;
-  line-height: 135%;
-  padding: 4px 8px;
-  background: var(--code-bg);
+.highlighter-chip:hover {
+  background-color: #FFD84D;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 6px rgba(255, 216, 77, 0.4);
+}
+
+.dark .highlighter-chip {
+  color: #16141F;
+  background-color: #FFD84D;
+  border-color: #FFE066;
+}
+
+/* Bookmark Ribbon */
+.ribbon-tag {
+  position: relative;
+  background: #FF6B35;
+  color: white;
+}
+.ribbon-tag::after {
+  content: "";
+  position: absolute;
+  bottom: -6px;
+  left: 0;
+  width: 0;
+  height: 0;
+  border-left: 12px solid #FF6B35;
+  border-right: 12px solid #FF6B35;
+  border-bottom: 6px solid transparent;
 }
