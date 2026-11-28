@@ -150,6 +150,17 @@ export const mockApi = {
       persistAll();
       return { success: true };
     },
+
+    async resetPassword({ email }) {
+      await delay(350, 600);
+      if (!email) {
+        throw new Error('Email is required');
+      }
+      return {
+        success: true,
+        message: `Password reset link sent to ${email}`,
+      };
+    },
   },
 
   // ---------------- SUBJECTS API ----------------

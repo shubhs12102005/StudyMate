@@ -3,6 +3,10 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { setTheme } from './store/slices/themeSlice';
 import { AppShell } from './components/layout/AppShell';
+import LandingPage from './pages/LandingPage';
+import LoginPage from './pages/auth/LoginPage';
+import RegisterPage from './pages/auth/RegisterPage';
+import ForgotPasswordPage from './pages/auth/ForgotPasswordPage';
 import Dashboard from './pages/Dashboard';
 import SubjectsPage from './pages/SubjectsPage';
 import WorkspacePage from './pages/WorkspacePage';
@@ -32,6 +36,14 @@ export default function App() {
   return (
     <BrowserRouter>
       <Routes>
+        {/* Public Landing & Marketing */}
+        <Route path="/" element={<LandingPage />} />
+
+        {/* Authentication Routes */}
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/register" element={<RegisterPage />} />
+        <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+
         {/* Design Showroom */}
         <Route
           path="/design"
@@ -43,7 +55,7 @@ export default function App() {
           }
         />
 
-        {/* App Shell Routes */}
+        {/* Protected App Shell Routes */}
         <Route element={<AppShell />}>
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/subjects" element={<SubjectsPage />} />
@@ -55,9 +67,8 @@ export default function App() {
           <Route path="/settings" element={<SettingsPage />} />
         </Route>
 
-        {/* Redirect root to /dashboard */}
-        <Route path="/" element={<Navigate to="/dashboard" replace />} />
-        <Route path="*" element={<Navigate to="/dashboard" replace />} />
+        {/* Catch-all fallback */}
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </BrowserRouter>
   );
