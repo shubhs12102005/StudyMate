@@ -18,6 +18,17 @@ export const apiSlice = createApi({
       },
       providesTags: ['Subject'],
     }),
+    getSubjectById: builder.query({
+      async queryFn(id) {
+        try {
+          const data = await api.subjects.get(id);
+          return { data };
+        } catch (error) {
+          return { error: { message: error.message } };
+        }
+      },
+      providesTags: (result, error, id) => [{ type: 'Subject', id }],
+    }),
     createSubject: builder.mutation({
       async queryFn(newSubject) {
         try {
@@ -28,6 +39,17 @@ export const apiSlice = createApi({
         }
       },
       invalidatesTags: ['Subject'],
+    }),
+    deleteSubject: builder.mutation({
+      async queryFn(id) {
+        try {
+          const data = await api.subjects.remove(id);
+          return { data };
+        } catch (error) {
+          return { error: { message: error.message } };
+        }
+      },
+      invalidatesTags: ['Subject', 'Document'],
     }),
 
     // Documents
@@ -46,6 +68,17 @@ export const apiSlice = createApi({
       async queryFn(payload) {
         try {
           const data = await api.documents.upload(payload);
+          return { data };
+        } catch (error) {
+          return { error: { message: error.message } };
+        }
+      },
+      invalidatesTags: ['Document', 'Subject'],
+    }),
+    deleteDocument: builder.mutation({
+      async queryFn(id) {
+        try {
+          const data = await api.documents.remove(id);
           return { data };
         } catch (error) {
           return { error: { message: error.message } };
@@ -167,9 +200,12 @@ export const apiSlice = createApi({
 
 export const {
   useGetSubjectsQuery,
+  useGetSubjectByIdQuery,
   useCreateSubjectMutation,
+  useDeleteSubjectMutation,
   useGetDocumentsQuery,
   useUploadDocumentMutation,
+  useDeleteDocumentMutation,
   useGetFlashcardsQuery,
   useGetDueFlashcardsQuery,
   useReviewFlashcardMutation,

@@ -9,6 +9,7 @@ import RegisterPage from './pages/auth/RegisterPage';
 import ForgotPasswordPage from './pages/auth/ForgotPasswordPage';
 import Dashboard from './pages/Dashboard';
 import SubjectsPage from './pages/SubjectsPage';
+import SubjectDetailPage from './pages/SubjectDetailPage';
 import WorkspacePage from './pages/WorkspacePage';
 import FlashcardsPage from './pages/FlashcardsPage';
 import QuizzesPage from './pages/QuizzesPage';
@@ -59,6 +60,7 @@ export default function App() {
         <Route element={<AppShell />}>
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/subjects" element={<SubjectsPage />} />
+          <Route path="/subjects/:id" element={<SubjectDetailPage />} />
           <Route path="/workspace" element={<WorkspacePage />} />
           <Route path="/flashcards" element={<FlashcardsPage />} />
           <Route path="/quizzes" element={<QuizzesPage />} />
