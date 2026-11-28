@@ -1,40 +1,63 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { setTheme } from './store/slices/themeSlice';
+import { AppShell } from './components/layout/AppShell';
+import Dashboard from './pages/Dashboard';
+import SubjectsPage from './pages/SubjectsPage';
+import WorkspacePage from './pages/WorkspacePage';
+import FlashcardsPage from './pages/FlashcardsPage';
+import QuizzesPage from './pages/QuizzesPage';
+import PlannerPage from './pages/PlannerPage';
+import AnalyticsPage from './pages/AnalyticsPage';
+import SettingsPage from './pages/SettingsPage';
 import DesignShowroom from './pages/DesignShowroom';
 
 export default function App() {
-  const [isDark, setIsDark] = useState(() => {
-    const saved = localStorage.getItem('studymate_theme');
-    if (saved) return saved === 'dark';
-    return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-  });
+  const dispatch = useDispatch();
+  const theme = useSelector((state) => state.theme.mode);
 
   useEffect(() => {
-    if (isDark) {
+    if (theme === 'midnight') {
       document.documentElement.classList.add('dark');
-      localStorage.setItem('studymate_theme', 'dark');
     } else {
       document.documentElement.classList.remove('dark');
-      localStorage.setItem('studymate_theme', 'paper');
     }
-  }, [isDark]);
+  }, [theme]);
 
-  const toggleTheme = () => {
-    setIsDark((prev) => !prev);
+  const handleToggleTheme = () => {
+    dispatch(setTheme(theme === 'paper' ? 'midnight' : 'paper'));
   };
 
   return (
     <BrowserRouter>
       <Routes>
+        {/* Design Showroom */}
         <Route
           path="/design"
           element={
-            <DesignShowroom isDark={isDark} onToggleTheme={toggleTheme} />
+            <DesignShowroom
+              isDark={theme === 'midnight'}
+              onToggleTheme={handleToggleTheme}
+            />
           }
         />
-        {/* For Phase 0, default route redirects to /design showroom */}
-        <Route path="/" element={<Navigate to="/design" replace />} />
-        <Route path="*" element={<Navigate to="/design" replace />} />
+
+        {/* App Shell Routes */}
+        <Route element={<AppShell />}>
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/subjects" element={<SubjectsPage />} />
+          <Route path="/workspace" element={<WorkspacePage />} />
+          <Route path="/flashcards" element={<FlashcardsPage />} />
+          <Route path="/quizzes" element={<QuizzesPage />} />
+          <Route path="/planner" element={<PlannerPage />} />
+          <Route path="/analytics" element={<AnalyticsPage />} />
+          <Route path="/settings" element={<SettingsPage />} />
+        </Route>
+
+        {/* Redirect root to /dashboard */}
+        <Route path="/" element={<Navigate to="/dashboard" replace />} />
+        <Route path="*" element={<Navigate to="/dashboard" replace />} />
       </Routes>
     </BrowserRouter>
   );
